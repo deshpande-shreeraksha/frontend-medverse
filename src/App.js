@@ -39,13 +39,15 @@ function App() {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item"><Link className="nav-link" to="/appointment">Appointment</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/doctor">Find a Doctor</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/test">Test</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/medication">Medication</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/service">Services</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/contact">Contact</Link></li>
-              </ul>
+  <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
+  <li className="nav-item"><Link className="nav-link" to="/appointment">Appointment</Link></li>
+  <li className="nav-item"><Link className="nav-link" to="/doctor">Find a Doctor</Link></li>
+  <li className="nav-item"><Link className="nav-link" to="/test">Test</Link></li>
+  <li className="nav-item"><Link className="nav-link" to="/medication">Medication</Link></li>
+  <li className="nav-item"><Link className="nav-link" to="/service">Services</Link></li>
+  <li className="nav-item"><Link className="nav-link" to="/contact">Contact</Link></li>
+</ul>
+
               <button className="btn btn-outline-primary me-2" onClick={toggleTheme}>
                 {darkMode ? 'Light Mode' : 'Dark Mode'}
               </button>
@@ -57,6 +59,7 @@ function App() {
         {/* Main Content */}
         <main className="container py-4">
           <Routes>
+       
             <Route path="/" element={<HomePage />} />
             <Route path="/appointment" element={<AppointmentPage />} />
             <Route path="/doctor" element={<FindDoctorPage />} />
