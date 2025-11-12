@@ -8,11 +8,7 @@ import AppointmentPage from './pages/AppointmentPage';
 import FindDoctorPage from './pages/FindDoctorPage';
 import MedicationPage from './pages/MedicationPage';
 import TestPage from './pages/TestPage';
-import BloodTestPage from './pages/BloodTestPage';
-import UrinePage from './pages/UrinePage';
-import HormonePage from './pages/HormonePage';
-import PathologyPage from './pages/PathologyPage';
-import ImagingPage from './pages/ImagingPage';
+
 import ContactPage from './pages/ContactPage';
 import ServicePage from './pages/ServicePage';
 import LoginPage from './pages/LoginPage';
@@ -69,11 +65,7 @@ function App() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/blood" element={<BloodTestPage />} />
-            <Route path="/urine" element={<UrinePage />} />
-            <Route path="/hormone" element={<HormonePage />} />
-            <Route path="/pathology" element={<PathologyPage />} />
-            <Route path="/imaging" element={<ImagingPage />} />
+           
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

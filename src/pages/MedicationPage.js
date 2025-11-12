@@ -7,22 +7,41 @@ const MedicationPage = () => {
   const [interactions, setInteractions] = useState([]);
   const [message, setMessage] = useState('');
 
+  const fallbackUses = {
+    ibuprofen: 'Used to reduce fever and relieve pain or inflammation.',
+    amoxicillin: 'Treats bacterial infections like bronchitis, pneumonia, and tonsillitis.',
+    metformin: 'Manages type 2 diabetes by lowering blood sugar.',
+    atorvastatin: 'Lowers cholesterol and prevents heart disease.',
+    omeprazole: 'Treats acid reflux, ulcers, and GERD.',
+    paracetamol: 'Relieves mild to moderate pain and reduces fever.',
+    azithromycin: 'Used for respiratory infections, skin infections, and sexually transmitted diseases.',
+    albuterol: 'Relieves bronchospasm in conditions like asthma and COPD.',
+    simvastatin: 'Lowers cholesterol and reduces risk of cardiovascular disease.',
+    losartan: 'Treats high blood pressure and protects kidneys from damage due to diabetes.'
+  };
+
   const fetchDrugData = async () => {
     setMessage('');
     setDrugInfo({});
     setInteractions([]);
 
+    const formattedName = drugName.trim().toLowerCase();
+    if (!formattedName) {
+      setMessage('Please enter a valid drug name.');
+      return;
+    }
+
     try {
       // Step 1: Get RxCUI code
-      const rxcuiRes = await axios.get(`https://rxnav.nlm.nih.gov/REST/rxcui.json?name=${drugName}`);
+      const rxcuiRes = await axios.get(`https://rxnav.nlm.nih.gov/REST/rxcui.json?name=${formattedName}`);
       const rxcui = rxcuiRes.data.idGroup?.rxnormId?.[0];
 
       if (!rxcui) {
-        setMessage('Drug not found. Please enter a generic name like Ibuprofen or Metformin.');
+        setMessage('Drug not found. Try a generic name like Ibuprofen or Metformin.');
         return;
       }
 
-      // Step 2: Get drug properties from RxNav
+      // Step 2: Get drug properties
       let name = 'Not available';
       let type = 'Not available';
       try {
@@ -32,10 +51,10 @@ const MedicationPage = () => {
         type = props.tty || type;
       } catch {}
 
-      // Step 3: Get synonyms using /drugs.json
+      // Step 3: Get synonyms
       let synonym = 'Not available';
       try {
-        const synonymRes = await axios.get(`https://rxnav.nlm.nih.gov/REST/drugs.json?name=${drugName}`);
+        const synonymRes = await axios.get(`https://rxnav.nlm.nih.gov/REST/drugs.json?name=${formattedName}`);
         const groups = synonymRes.data.drugGroup?.conceptGroup || [];
         const names = [];
 
@@ -50,15 +69,20 @@ const MedicationPage = () => {
         }
       } catch {}
 
-      // Step 4: Get common uses from openFDA
       let uses = 'Use information not available';
-      try {
-        const fdaRes = await axios.get(`https://api.fda.gov/drug/label.json?search=generic_name:${drugName.toLowerCase()}`);
-        const label = fdaRes.data.results?.[0];
-        uses = label?.indications_and_usage?.[0] || uses;
-      } catch {}
+try {
+  const fdaRes = await axios.get(`https://api.fda.gov/drug/label.json?search=generic_name:${formattedName}+OR+brand_name:${formattedName}+OR+active_ingredient:${formattedName}`);
+  const label = fdaRes.data.results?.[0];
+  uses = label?.indications_and_usage?.[0] || label?.purpose?.[0] || uses;
+} catch {}
 
-      // Step 5: Get interaction data from RxNav
+
+      // Step 5: Fallback if openFDA fails
+      if (uses === 'Use information not available') {
+        uses = fallbackUses[formattedName] || uses;
+      }
+
+      // Step 6: Get interaction data
       let interactionData = [];
       try {
         const interactionRes = await axios.get(`https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${rxcui}`);
@@ -68,7 +92,7 @@ const MedicationPage = () => {
       setDrugInfo({ name, type, uses, synonym });
       setInteractions(interactionData);
     } catch {
-      setMessage('Error fetching drug data. Please check your internet connection or try a different name.');
+      setMessage('Error fetching drug data. Please try again or check your internet connection.');
     }
   };
 
