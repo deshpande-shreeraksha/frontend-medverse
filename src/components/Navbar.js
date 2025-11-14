@@ -4,7 +4,7 @@ import './Navbar.css'; // Make sure this CSS file exists
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+ 
 
   return (
     <nav className="navbar">

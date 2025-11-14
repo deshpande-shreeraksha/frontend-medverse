@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import '../styles/FindDoctorPage.css';
 
 const allDoctors = [
-  { name: 'Dr. Asha Rao', specialty: 'Cardiology', locality: 'Indiranagar', mode: 'In-Person' },
-  { name: 'Dr. Ravi Menon', specialty: 'Cardiology', locality: 'Indiranagar', mode: 'Video & In-Person' },
-  { name: 'Dr. Neha Jain', specialty: 'Dermatology', locality: 'Koramangala', mode: 'Video' },
-  { name: 'Dr. Arjun Das', specialty: 'Dermatology', locality: 'Koramangala', mode: 'Video & In-Person' },
-  { name: 'Dr. Priya Nair', specialty: 'Pediatrics', locality: 'Whitefield', mode: 'In-Person' },
-  { name: 'Dr. Kiran Shetty', specialty: 'Pediatrics', locality: 'Whitefield', mode: 'Video' },
-  { name: 'Dr. Meera Kulkarni', specialty: 'General Physician', locality: 'Jayanagar', mode: 'Video & In-Person' },
-  { name: 'Dr. Sandeep Reddy', specialty: 'General Physician', locality: 'Jayanagar', mode: 'In-Person' },
+  { name: 'Dr. Asha Rao', specialty: 'Cardiology', mode: 'Video & In-Person' },
+  { name: 'Dr. Ravi Menon', specialty: 'Cardiology', mode: 'Video & In-Person' },
+  { name: 'Dr. Neha Jain', specialty: 'Dermatology', mode: 'Video & In-Person' },
+  { name: 'Dr. Arjun Das', specialty: 'Dermatology', mode: 'Video & In-Person' },
+  { name: 'Dr. Priya Nair', specialty: 'Pediatrics', mode: 'Video & In-Person' },
+  { name: 'Dr. Kiran Shetty', specialty: 'Pediatrics', mode: 'Video & In-Person' },
+  { name: 'Dr. Meera Kulkarni', specialty: 'General Physician',  mode: 'Video & In-Person' },
+  { name: 'Dr. Sandeep Reddy', specialty: 'General Physician',  mode: 'Video & In-Person' },
 ];
 
 function FindDoctorPage() {
@@ -30,14 +30,13 @@ function FindDoctorPage() {
   return (
     <div className="doctor-container">
       <h2>Find a Doctor</h2>
-      <p>Select from verified specialists in your locality.</p>
+      <p>Select from verified specialists in your specialization.</p>
 
       <div className="doctor-grid">
         {filteredDoctors.map((doc, index) => (
           <div key={index} className="doctor-card">
             <h5>{doc.name}</h5>
             <p><strong>Specialty:</strong> {doc.specialty}</p>
-            <p><strong>Locality:</strong> {doc.locality}</p>
             <p><strong>Consultation Mode:</strong> {doc.mode}</p>
           </div>
         ))}
