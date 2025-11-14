@@ -28,7 +28,7 @@ function HomePage() {
             <Link to="/doctor" className="card card-hover text-decoration-none">
               <div className="card-body text-center">
                 <h5 className="card-title">Find a Doctor</h5>
-                <p className="card-text">Search by specialty, location, or mode</p>
+                <p className="card-text">Search by specialty or mode</p>
               </div>
             </Link>
           </div>
